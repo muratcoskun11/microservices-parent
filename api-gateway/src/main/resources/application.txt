@@ -1,0 +1,50 @@
+server.port=8080
+#eureka
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+spring.application.name=api-gateway
+logging.level.root=INFO
+logging.level.org.springframework.cloud.gateway.route.RouteDefinitionLocator= INFO
+logging.level.org.springframework.cloud.gateway= TRACE
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/duyuru?useUnicode=yes&amp;characterEncoding=utf8
+spring.datasource.username=postgres
+spring.datasource.password=1
+
+#DUYURU ROUTE
+spring.cloud.gateway.routes[0].id=duyuru-service
+spring.cloud.gateway.routes[0].uri=lb://duyuru-service
+spring.cloud.gateway.routes[0].predicates[0]=Path=/duyuru/**
+
+spring.cloud.gateway.routes[1].id=login-service
+spring.cloud.gateway.routes[1].uri=lb://login-service
+spring.cloud.gateway.routes[1].predicates[0]=Path=/login/**
+
+spring.cloud.gateway.routes[2].id=user-service
+spring.cloud.gateway.routes[2].uri=http://127.0.0.1:4040
+spring.cloud.gateway.routes[2].predicates[0]=Path=/api/v1/user/**
+spring.cloud.gateway.routes[2].filters[0]=TokenRelay=
+
+spring.cloud.gateway.routes[3].id=token-service
+spring.cloud.gateway.routes[3].uri=lb://token-service
+spring.cloud.gateway.routes[3].predicates[0]=Path=/token/**
+
+spring.security.oauth2.client.registration.gateway.provider=spring
+spring.security.oauth2.client.registration.gateway.client-id=gateway-client-id
+spring.security.oauth2.client.registration.gateway.client-secret=secret
+spring.security.oauth2.client.registration.gateway.authorization-grant-type=authorization_code
+spring.security.oauth2.client.registration.gateway.redirect-uri="http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
+spring.security.oauth2.client.registration.gateway.scope=openid
+spring.security.oauth2.client.registration.gateway.client-name=gateway
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.provider=spring
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.client-id=gateway-client-id
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.client-secret=secret
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.authorization-grant-type=authorization_code
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.redirect-uri="http://127.0.0.1:8080/authorized"
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.scope=api.read
+spring.security.oauth2.client.registration.gateway-client-id-authorization-code.client-name=gateway-client-id-authorization-code
+spring.security.oauth2.client.provider.spring.issuer-uri= http://auth-server:2020
+
+
+
+
+

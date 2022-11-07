@@ -1,0 +1,38 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: backend-gateway-client
+  cloud:
+    gateway:
+      routes:
+        - id: resources
+          uri: http://127.0.0.1:4040
+          predicates:
+            Path=/api/v1/user/**
+          filters:
+            - TokenRelay=
+
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: spring
+            client-id: gateway-client-id
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
+            scope: openid
+            client-name: gateway
+          gateway-client-id-authorization-code:
+            provider: spring
+            client-id: gateway-client-id
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8080/authorized"
+            scope: api.read
+            client-name: gateway-client-id-authorization-code
+        provider:
+          spring:
+            issuer-uri: http://auth-server:2020
