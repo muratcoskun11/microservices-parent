@@ -1,8 +1,7 @@
 package com.solmaz.controller;
 
-import com.solmaz.dto.request.AddPostRequest;
 import com.solmaz.dto.request.AddPrivatePostRequest;
-import com.solmaz.dto.response.ErrorResponse;
+import com.solmaz.exception.ErrorResponse;
 import com.solmaz.dto.response.PostReceiverResponse;
 import com.solmaz.dto.response.PostResponse;
 import com.solmaz.exception.PinIsNotCorrectException;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.RequestScope;
 
 import java.util.HashSet;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/PrivatePost")

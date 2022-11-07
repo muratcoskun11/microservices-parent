@@ -1,6 +1,4 @@
-package com.solmaz.loginservice.service;
-
-import org.springframework.web.server.ServerWebExchange;
+package com.solmaz.userservice.service;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,4 +8,6 @@ public interface TokenProvider {
     String getUserIdFromToken(String token);
     String extractJwtFromRequest(HttpServletRequest request);
     boolean isExpired(String token);
+
+    String getUserIdFromRequest();
 }

@@ -1,6 +1,6 @@
-package com.solmaz.security.config;
+package com.solmaz.authorizationserver.configuration.security.config;
 
-import com.solmaz.security.service.TokenProvider;
+import com.solmaz.authorizationserver.configuration.security.service.TokenProvider;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

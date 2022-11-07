@@ -1,21 +1,22 @@
-package com.solmaz.service.business;
+package com.solmaz.userservice.service.business;
 
 import com.google.common.hash.Hashing;
-import com.solmaz.dto.request.AddUserRequest;
-import com.solmaz.dto.request.UpdateUserRequest;
-import com.solmaz.dto.response.UserResponse;
-import com.solmaz.entity.Group;
-import com.solmaz.entity.User;
-import com.solmaz.exception.NotFoundException;
-import com.solmaz.repository.UserRepository;
-import com.solmaz.service.UserService;
+import com.solmaz.userservice.dto.AddUserRequest;
+import com.solmaz.userservice.dto.UpdateUserRequest;
+import com.solmaz.userservice.dto.UserResponse;
+import com.solmaz.userservice.entity.User;
+import com.solmaz.userservice.exception.NotFoundException;
+import com.solmaz.userservice.repository.UserRepository;
+import com.solmaz.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -37,6 +38,7 @@ public class UserServiceImpl implements UserService {
     private String userImagesDirectory;
     @Override
     public UserResponse save(AddUserRequest addUserRequest) throws IOException {
+
         var user = userRepository.save(modelMapper.map(addUserRequest, User.class));
         var rootPath = System.getProperty("user.dir")+userImagesDirectory;
         var userPath = rootPath+"/"+user.getUserId();
@@ -55,8 +57,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserResponse findByEmail(String email) {
+        return modelMapper.map(userRepository.findByEmail(email).orElseThrow(UserServiceImpl::userNotFound),UserResponse.class);
     }
 
     @Override
@@ -112,8 +114,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(String userId) {
-        var user = findById(userId);
-        redisCacheService.removeToken(user.getEmail());
+        redisCacheService.removeToken(userId);
         userRepository.deleteById(userId);
     }
 
@@ -140,13 +141,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Group> findGroupsOfUser(String userId) {
-        return userRepository.findGroupsOfUser(userId);
+    public List<UserResponse> findAll() {
+        return userRepository.findAll().stream().map(user -> modelMapper.map(user,UserResponse.class)).toList();
     }
 
     @Override
-    public List<UserResponse> findAll() {
-        return userRepository.findAll().stream().map(user -> modelMapper.map(user,UserResponse.class)).toList();
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 

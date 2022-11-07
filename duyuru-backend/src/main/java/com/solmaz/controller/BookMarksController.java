@@ -1,8 +1,7 @@
 package com.solmaz.controller;
 
 import com.solmaz.dto.response.BookmarkResponse;
-import com.solmaz.dto.response.ErrorResponse;
-import com.solmaz.dto.response.PostResponse;
+import com.solmaz.exception.ErrorResponse;
 import com.solmaz.service.BookMarksService;
 import com.solmaz.security.service.TokenProvider;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

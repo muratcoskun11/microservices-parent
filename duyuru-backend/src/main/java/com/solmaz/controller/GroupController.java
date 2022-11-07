@@ -1,6 +1,6 @@
 package com.solmaz.controller;
 
-import com.solmaz.dto.response.ErrorResponse;
+import com.solmaz.exception.ErrorResponse;
 import com.solmaz.dto.response.GroupResponse;
 import com.solmaz.dto.response.PostResponse;
 import com.solmaz.service.GroupService;

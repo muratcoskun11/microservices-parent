@@ -1,6 +1,6 @@
-package com.solmaz.loginservice.service.business;
+package com.solmaz.userservice.service.business;
 
-import com.solmaz.loginservice.service.TokenProvider;
+import com.solmaz.userservice.service.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -8,7 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +31,19 @@ public class JwtTokenProvider implements TokenProvider {
 
     @Override
     public boolean validate(String token) {
-        var response = restTemplate.exchange("http://token-service/token/validate", HttpMethod.GET, new HttpEntity<>(token),Boolean.class);
+        Map<String,String> params = new HashMap<>();
+        var url = UriComponentsBuilder.fromHttpUrl("http://token-service/token/validate").queryParam("token","{token}").encode().toUriString();
+        params.put("token",token);
+        var response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(token),Boolean.class,params);
         return response.getBody();
     }
 
     @Override
     public String getUserIdFromToken(String token) {
-        var response = restTemplate.exchange("http://token-service/token/getUserId", HttpMethod.GET, new HttpEntity<>(token),String.class);
+        Map<String,String> params = new HashMap<>();
+        var url = UriComponentsBuilder.fromHttpUrl("http://token-service/token/getUserId").queryParam("token","{token}").encode().toUriString();
+        params.put("token",token);
+        var response = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(new HttpHeaders()),String.class,params);
         return response.getBody();
     }
 
@@ -53,6 +60,14 @@ public class JwtTokenProvider implements TokenProvider {
     public boolean isExpired(String token){
         var response = restTemplate.exchange("http://token-service/token/isExpired", HttpMethod.GET, new HttpEntity<>(token),boolean.class);
         return response.getBody();
+    }
+
+    @Override
+    public String getUserIdFromRequest() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        var token = extractJwtFromRequest(request);
+        var userId = getUserIdFromToken(token);
+        return userId;
     }
 
 }

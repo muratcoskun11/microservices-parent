@@ -1,7 +1,8 @@
-package com.solmaz.security.service.business;
+package com.solmaz.authorizationserver.configuration.security.service.business;
 
-import com.solmaz.repository.UserRepository;
+import com.solmaz.authorizationserver.configuration.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +20,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         var user = userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException(username + " not found "));
 
-        var userDetails = User.builder().username(user.getUserId()).password("").roles("User").authorities(new ArrayList<>()).build();
+        var authorities = new ArrayList<SimpleGrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("xauthority"));
+        var userDetails = User.builder().username(user.getUserId()).password("").roles("User").authorities(authorities).build();
 
         return userDetails;
     }

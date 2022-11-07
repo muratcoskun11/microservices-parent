@@ -1,4 +1,4 @@
-package com.solmaz.entity;
+package com.solmaz.authorizationserver.configuration;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -30,47 +30,7 @@ public class User {
     private String title;
     @Column(name = "photo_url")
     private String photoUrl;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "creator",targetEntity = Group.class)
-    private List<Group> groups;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "publisher",targetEntity = Poll.class)
-    private List<Poll> polls;
-    @JsonIgnore
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL)
-    private List<UserPostReceiver> postReceiverEntities = new ArrayList<>();
-    @JsonIgnore
-    @OneToMany(
-            cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "seenByUser"
-    )
-    private List<SeePost> seePost;
-    @JsonIgnore
-    @OneToMany(
-            cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user"
-    )
-    private List<Bookmark> bookmarks;
-    @JsonIgnore
-    @OneToMany(
-            cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user"
-    )
-    private List<GroupMember> groupMembers;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Post> posts;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",targetEntity = PrivatePost.class)
-    private List<PrivatePost> privatePosts;
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<UserPrivatePostRecevier> userPrivatePostReceviers;
-    @JsonIgnore
-    @Column(name = "pin")
-    private String privateMessagePin;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<UserPollReceiver> userPollReceiver;
-    public User() {
-        this.userId = UUID.randomUUID().toString();
-    }
+
 
     @Override
     public boolean equals(Object o) {

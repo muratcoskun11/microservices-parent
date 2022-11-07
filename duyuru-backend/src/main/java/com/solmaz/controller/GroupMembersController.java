@@ -4,6 +4,7 @@ package com.solmaz.controller;
 import com.solmaz.dto.request.AddGroupMemberRequest;
 import com.solmaz.dto.request.AddGroupRequest;
 import com.solmaz.dto.response.*;
+import com.solmaz.exception.ErrorResponse;
 import com.solmaz.service.GroupMembersService;
 import com.solmaz.security.service.TokenProvider;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

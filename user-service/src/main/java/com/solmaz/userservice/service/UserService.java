@@ -1,10 +1,9 @@
-package com.solmaz.service;
+package com.solmaz.userservice.service;
 
-import com.solmaz.dto.request.AddUserRequest;
-import com.solmaz.dto.request.UpdateUserRequest;
-import com.solmaz.dto.response.UserResponse;
-import com.solmaz.entity.Group;
-import com.solmaz.entity.User;
+import com.solmaz.userservice.dto.AddUserRequest;
+import com.solmaz.userservice.dto.UpdateUserRequest;
+import com.solmaz.userservice.dto.UserResponse;
+import com.solmaz.userservice.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ public interface UserService {
 
     List<User> findAllById(List<String> idList);
 
-    Optional<User> findByEmail(String email);
+    UserResponse findByEmail(String email);
 
     String write(MultipartFile file, String filePath) throws IOException;
 
@@ -36,7 +35,9 @@ public interface UserService {
     List<UserResponse> searchByUsernameStartsWith(String nameStartsWith);
 
     void setPin(String userId,String pin);
-    List<Group> findGroupsOfUser(String userId);
 
     List<UserResponse> findAll();
+
+    boolean existsByEmail(String email);
 }
+

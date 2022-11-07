@@ -1,6 +1,4 @@
-package com.solmaz.security.service;
-
-import org.springframework.security.core.userdetails.UserDetails;
+package com.solmaz.authorizationserver.configuration.security.service;
 
 import javax.servlet.http.HttpServletRequest;
 

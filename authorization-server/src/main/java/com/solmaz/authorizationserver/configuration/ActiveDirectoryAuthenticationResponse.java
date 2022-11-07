@@ -1,4 +1,4 @@
-package com.solmaz.dto.response;
+package com.solmaz.authorizationserver.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

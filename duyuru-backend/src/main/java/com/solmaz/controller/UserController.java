@@ -1,7 +1,7 @@
 package com.solmaz.controller;
 
 import com.solmaz.dto.request.UpdateUserRequest;
-import com.solmaz.dto.response.ErrorResponse;
+import com.solmaz.exception.ErrorResponse;
 import com.solmaz.dto.response.UserResponse;
 import com.solmaz.service.UserService;
 import com.solmaz.security.service.TokenProvider;

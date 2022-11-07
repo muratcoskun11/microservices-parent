@@ -1,6 +1,6 @@
-package com.solmaz.security.service.business;
+package com.solmaz.authorizationserver.configuration.security.service.business;
 
-import com.solmaz.security.service.TokenProvider;
+import com.solmaz.authorizationserver.configuration.security.service.TokenProvider;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

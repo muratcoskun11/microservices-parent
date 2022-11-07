@@ -1,4 +1,4 @@
-package com.solmaz.dto.response;
+package com.solmaz.userservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

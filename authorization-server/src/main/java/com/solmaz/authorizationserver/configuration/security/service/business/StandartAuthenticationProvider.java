@@ -1,10 +1,6 @@
-package com.solmaz.security.service.business;
+package com.solmaz.authorizationserver.configuration.security.service.business;
 
-import com.solmaz.dto.request.AuthenticationRequest;
-import com.solmaz.dto.request.AddUserRequest;
-import com.solmaz.dto.response.ActiveDirectoryAuthenticationResponse;
-import com.solmaz.entity.User;
-import com.solmaz.repository.UserRepository;
+import com.solmaz.authorizationserver.configuration.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -14,11 +10,14 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -52,7 +51,10 @@ public class StandartAuthenticationProvider implements AuthenticationProvider {
                 throw new RuntimeException(e);
             }
         }
-        var usernamePasswordAuthenticationToken= new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),null,new ArrayList<>());
+        var authorities = new ArrayList<SimpleGrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("xauthority"));
+        var usernamePasswordAuthenticationToken= new UsernamePasswordAuthenticationToken(authentication.getPrincipal(),null,authorities);
+        System.err.println(usernamePasswordAuthenticationToken.getPrincipal());
 
         return usernamePasswordAuthenticationToken;
     }

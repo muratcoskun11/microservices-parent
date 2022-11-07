@@ -1,4 +1,4 @@
-package com.solmaz.dto.response;
+package com.solmaz.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

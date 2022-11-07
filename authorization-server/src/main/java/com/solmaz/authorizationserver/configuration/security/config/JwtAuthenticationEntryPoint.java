@@ -1,4 +1,4 @@
-package com.solmaz.security.config;
+package com.solmaz.authorizationserver.configuration.security.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.AuthenticationException;

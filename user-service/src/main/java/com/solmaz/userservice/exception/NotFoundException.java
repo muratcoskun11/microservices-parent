@@ -1,4 +1,4 @@
-package com.solmaz.exception;
+package com.solmaz.userservice.exception;
 
 import lombok.Getter;
 

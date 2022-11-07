@@ -1,7 +1,7 @@
 package com.solmaz.security.controller;
 
 import com.solmaz.dto.request.LoginRequest;
-import com.solmaz.dto.response.ErrorResponse;
+import com.solmaz.exception.ErrorResponse;
 import com.solmaz.dto.response.LoginResponse;
 import com.solmaz.security.service.TokenProvider;
 import com.solmaz.service.business.RedisCacheServiceImpl;
@@ -16,7 +16,7 @@ import org.springframework.web.context.annotation.RequestScope;
 
 
 @RestController
-@RequestMapping
+@RequestMapping("/login")
 @RequestScope
 @CrossOrigin
 @EnableCaching
@@ -26,7 +26,7 @@ public class LoginController {
     private final  UserDetailsService userDetailsService;
     private final TokenProvider tokenProvider;
     private final RedisCacheServiceImpl redisCacheService;
-    @PostMapping("/login")
+    @PostMapping
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
 
         var email = loginRequest.getEmail();
